@@ -1,4 +1,4 @@
-# Projeto Tarefa 03-02 UCC6
+# Projeto Tarefa Monitor Serial
 
 Este repositório contém o código-fonte e as instruções para a implementação de um projeto com a plataforma BitDogLab, utilizando o microcontrolador RP2040. O objetivo principal é controlar LEDs RGB, botões com interrupções e debounce, além de exibir caracteres em um display SSD1306 via I2C. A comunicação serial é feita via UART, e a manipulação da matriz de LEDs WS2812 também é abordada.
 
