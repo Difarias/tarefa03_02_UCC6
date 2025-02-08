@@ -6,7 +6,7 @@
 #include "hardware/timer.h"           // Biblioteca para manipulação de timers
 #include <hardware/i2c.h>             // Biblioteca para comunicação I2C
 #include <hardware/clocks.h>          // Biblioteca para manipulação dos clocks
-#include "build/tarefa03_02.pio.h"    // Programa PIO específico para controlar a matriz de LEDs
+#include "tarefa03_02.pio.h"    // Programa PIO específico para controlar a matriz de LEDs
 #include <src/ssd1306.h>              // Biblioteca para controle do display OLED SSD1306
 #include <src/font.h>                 // Fonte para o display OLED
 
@@ -68,6 +68,7 @@ void atualizar_display();
 static void interrupcao_botao(uint gpio, uint32_t eventos);
 
 // Função principal 
+// Função principal 
 int main() {
     stdio_init_all(); // Inicializa a comunicação USB
 
@@ -82,46 +83,42 @@ int main() {
     gpio_set_irq_enabled_with_callback(BOTAO_A, GPIO_IRQ_EDGE_FALL, true, &interrupcao_botao);
     gpio_set_irq_enabled_with_callback(BOTAO_B, GPIO_IRQ_EDGE_FALL, true, &interrupcao_botao);
 
-    bool color = true;
-    char caractere = ' ';
-    ssd1306_fill(&ssd, !color);
-    ssd1306_rect(&ssd, 3, 3, 122, 58, color, !color);
-    ssd1306_draw_char(&ssd, caractere, 58, 30);
-    ssd1306_draw_string(&ssd, verde_mensagem, 10, 10);
-    ssd1306_draw_string(&ssd, azul_mensagem, 10, 50);
+    bool fundo_preto = false;
+    char caractere_recebido = ' ';
+    
+    ssd1306_fill(&ssd, fundo_preto);
+    ssd1306_draw_string(&ssd, "Aguardando entrada...", 20, 10);
     ssd1306_send_data(&ssd);
 
     while (true) {
-        if(stdio_usb_connected()) {
-            if (scanf("%c", &caractere) == 1) {
-                printf("Caractere digitado: %c\n", caractere);
-
-                // Desenha na matriz de led se for um número
-                if (isdigit(caractere)) {
-                    int numero = caractere - '0'; // Converte o caractere para o número correspondente
-                    desenhar_numero(numero, 1);   // Desenha o número na matriz (1 para acender o LED)
-                }
-                else {
-                    limpar_matriz();
-                    atualizar_matriz();
-                }
+        if (!stdio_usb_connected()) {
+            sleep_ms(100);
+            continue;
+        }
+        
+        if (scanf("%c", &caractere_recebido) == 1) {
+            printf("Entrada: %c\n", caractere_recebido);
+            
+            if (isdigit(caractere_recebido)) {
+                int numero = caractere_recebido - '0';
+                desenhar_numero(numero, 1);
+            } else {
+                limpar_matriz();
+                atualizar_matriz();
             }
-
-            color = !color;
-
-            // Atualiza o conteúdo do display com animações
-            ssd1306_fill(&ssd, !color); // Limpa o display
-            ssd1306_rect(&ssd, 3, 3, 122, 58, color, !color); // Desenha um retângulo
-            ssd1306_draw_char(&ssd, caractere, 58, 30);
+            
+            
+            ssd1306_fill(&ssd, fundo_preto);
+            ssd1306_draw_char(&ssd, caractere_recebido, 50, 25);
             ssd1306_draw_string(&ssd, verde_mensagem, 10, 10);
             ssd1306_draw_string(&ssd, azul_mensagem, 10, 50);
-            ssd1306_send_data(&ssd); // Atualiza o display
+            ssd1306_send_data(&ssd);
         }
-
-        sleep_ms(100);
+        
+        sleep_ms(200);
     }
-
 }
+
 
 // Função para configurar os botões e LEDs
 void iniciar_botoes_leds() {
