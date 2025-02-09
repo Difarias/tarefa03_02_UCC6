@@ -80,4 +80,4 @@ Siga os passos abaixo para clonar e rodar o projeto localmente:
 
 ## Desenvolvedor
 
-Este projeto foi desenvolvido por **Diego Farias de Freitas**.
+Projeto desenvolvido por **Diego Farias de Freitas**.
