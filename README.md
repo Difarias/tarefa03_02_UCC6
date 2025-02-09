@@ -26,7 +26,8 @@ Siga os passos abaixo para clonar e rodar o projeto localmente:
 2. **Entre na pasta do repositório:**
 
     ```bash
-    cd tarefa03_02_UCC6
+    cd tarefa03_02_UCC6/
+    code .
     ```
 
 3. **Crie a pasta de build e entre nela:**
@@ -47,14 +48,25 @@ Siga os passos abaixo para clonar e rodar o projeto localmente:
     ```bash
     make
     ```
-
-6. **Execute na placa**
-    - Copie o arquivo .uf2 gerado na sua placa conectada ao PC.
     
+6. **Carregue o Projeto na BitDogLab:**  
+    - Conecte a BitDogLab ao computador usando um cabo USB e coloque-a em modo **BOOTSEL** (pressione e segure o botão BOOTSEL enquanto conecta a placa).  
+    - A placa será reconhecida como uma unidade de armazenamento.  
+    - Compile o projeto para gerar o arquivo `.uf2`.  
+    - Copie o arquivo `.uf2` para a unidade correspondente à BitDogLab.  
+    - A placa será reiniciada automaticamente após a cópia do arquivo.  
 
+7. **Teste a Execução:**  
+    - **Monitoramento Serial:**  
+      Abra o **Serial Monitor** no Visual Studio Code para acompanhar as mensagens enviadas pela UART em tempo real.  
+
+    - **Interação com o Projeto:**  
+      - O **Botão A** alterna o estado do LED verde entre **ligado** e **desligado**.  
+      - O **Botão B** alterna o estado do LED azul entre **ligado** e **desligado**.  
+      - Utilize o **Serial Monitor** para enviar caracteres. Observe a exibição no display **SSD1306** e a reação da matriz de LEDs **WS2812**.  
 ## Demonstração
 
-Confira a demonstração do funcionamento do projeto no vídeo abaixo:
+## Confira a demonstração do funcionamento do projeto no vídeo abaixo:
 
 [![Demonstração do Projeto](https://img.youtube.com/vi/4xROWoLU9Rk/0.jpg)](https://youtu.be/4xROWoLU9Rk)
 
